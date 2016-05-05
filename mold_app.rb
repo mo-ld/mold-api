@@ -7,7 +7,7 @@ class MyApp < Swaggering
     config.api_version = '1.0.0'
 
     # set sparql endpoint here !
-    sparql = 'http://localhost:9000/sparql'
+    sparql = 'http://vt/sparql'
     url_split = sparql.split("/")
     http = ""
     if url_split[2].include?(":")
