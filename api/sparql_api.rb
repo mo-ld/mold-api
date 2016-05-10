@@ -15,14 +15,14 @@ MyApp.add_route('GET', '/v1/sparql', {
                       "dataType" => "string",
                       "paramType" => "query",
                       "allowableVal ues" => "",
-                    }
+                    },
                     {
                       "name" => "format",
                       "description" => "return format (rdf/xml, ntriples, nquads, turtle, json-ld)",
                       "dataType" => "string",
                       "paramType" => "query",
                       "allowableValues" => "",
-                    },
+                    }
                   ]}) do
   cross_origin
   # the guts live here
@@ -58,10 +58,7 @@ MyApp.add_route('POST', '/v1/sparql', {
                      "in": "body",
                      "description": "SPARQL query",
                      "required": true,
-                     "schema": {
-                                 "query": "string",
-                                "format": "type": "string",
-                               }
+                     "schema": {"type": "string"}
                     }
                   ]}) do
   cross_origin
