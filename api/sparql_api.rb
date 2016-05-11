@@ -37,6 +37,7 @@ MyApp.add_route('GET', '/v1/sparql', {
 
   q = "#{params[:query]}"
   q.gsub!("&","%26%0A")
+  q.gsub!("#","%23")
   url = settings.sparql+"?query=#{q}&format=#{format}"
   req = settings.http.request_get(URI(url))
   res = req.body
@@ -64,11 +65,13 @@ MyApp.add_route('POST', '/v1/sparql', {
   cross_origin
   # the guts live here
 
-  request.body.rewind
-  request_payload = JSON.parse request.body.read
-  p request_payload
+  # request.body.rewind
+  # request_payload = JSON.parse request.body.read
 
-  headers 'Access-Control-Allow-Origin' => '*'
+  puts "###request body :"
+  p request.body.read
+  puts "----"
+
 
   # format = settings.format['json-ld']
   # if params[:format]

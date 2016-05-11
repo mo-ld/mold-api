@@ -1,3 +1,4 @@
+# coding: utf-8
 require './lib/swaggering'
 require 'net/http'
 
@@ -36,7 +37,7 @@ class MyApp < Swaggering
     mime_type :csv, 'text/csv'
     mime_type :tsv, 'text/tsv'
     mime_type :json, 'application/json'
-    
+
     set :sparql, sparql
     set :http, http
     set :format, format
