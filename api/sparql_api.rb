@@ -68,6 +68,8 @@ MyApp.add_route('POST', '/v1/sparql', {
   request_payload = JSON.parse request.body.read
   p request_payload
 
+  headers 'Access-Control-Allow-Origin' => '*'
+
   # format = settings.format['json-ld']
   # if params[:format]
   #   content_type params[:format].gsub("-","_").to_sym
