@@ -65,28 +65,21 @@ MyApp.add_route('POST', '/v1/sparql', {
   cross_origin
   # the guts live here
 
-  # request.body.rewind
-  # request_payload = JSON.parse request.body.read
+  format = settings.format['json']
+  if params[:format]
+    content_type params[:format].gsub("-","_").to_sym
+    if settings.format.has_key? params[:format]
+      format = settings.format[params[:format]]
+    end
+  end
 
-  puts "###request body :"
-  p request.body.read
-  puts "----"
+  q = request.body.read.to_s
+  q.gsub!("&","%26%0A")
+  q.gsub!("#","%23")
+  url = settings.sparql+"?query=#{q}&format=#{format}"
+  req = settings.http.request_get(URI(url))
+  res = req.body
 
-
-  # format = settings.format['json-ld']
-  # if params[:format]
-  #   content_type params[:format].gsub("-","_").to_sym
-  #   if settings.format.has_key? params[:format]
-  #     format = settings.format[params[:format]]
-  #   end
-  # end
-
-  # q = "#{params[:query]}"
-  # q.gsub!("&","%26%0A")
-  # url = settings.sparql+"?query=#{q}&format=#{format}"
-  # req = settings.http.request_get(URI(url))
-  # res = req.body
-
-  {"message" => "yes, it worked"}.to_json
+  res
 
 end
