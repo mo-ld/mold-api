@@ -73,9 +73,9 @@ MyApp.add_route('POST', '/v1/sparql', {
     end
   end
 
-  q = request.body.read.to_s
+  q = request.body.read
   q.gsub!("&","%26%0A")
-  q.gsub!("#","%23")
+  q.gsub!("#","%23").gsub!("\"","")
   url = settings.sparql+"?query=#{q}&format=#{format}"
   req = settings.http.request_get(URI(url))
   res = req.body
