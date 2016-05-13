@@ -14,11 +14,11 @@ MyApp.add_route('GET', '/v1/sparql', {
                       "description" => "SPARQL",
                       "dataType" => "string",
                       "paramType" => "query",
-                      "allowableVal ues" => "",
+                      "allowableValues" => "",
                     },
                     {
                       "name" => "format",
-                      "description" => "return format (rdf/xml, ntriples, nquads, turtle, json-ld)",
+                      "description" => "return format (rdf-xml, ntriples, turtle, json-ld)",
                       "dataType" => "string",
                       "paramType" => "query",
                       "allowableValues" => "",
@@ -66,20 +66,22 @@ MyApp.add_route('POST', '/v1/sparql', {
   # the guts live here
 
   format = settings.format['json']
-  if params[:format]
-    content_type params[:format].gsub("-","_").to_sym
-    if settings.format.has_key? params[:format]
-      format = settings.format[params[:format]]
+  body = JSON.parse(request.body.read.to_s)
+  body_format = body['format']
+  if body_format
+    content_type body_format.gsub("-","_").to_sym
+    if settings.format.has_key? body_format
+      format = settings.format[body_format]
     end
   end
 
-  q = request.body.read.to_s
+  q = body['query']
   q.gsub!("&","%26%0A")
   q.gsub!("#","%23")
   q.gsub!("\"","")
   url = settings.sparql+"?query=#{q}&format=#{format}"
   req = settings.http.request_get(URI(url))
-  res = req.body
+  res = req.read_body
 
   res
 

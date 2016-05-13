@@ -9,30 +9,20 @@ MyApp.add_route('GET', '/v1/inlinks', {
                   "endpoint" => "/inlinks", 
                   "notes" => "The inlinks call will return a list of triples that target the input URI.\n",
                   "parameters" => [
-                    
                     {
                       "name" => "uri",
                       "description" => "URI to describe",
                       "dataType" => "string",
                       "paramType" => "query",
-                      
                       "allowableValues" => "",
-                      
                     },
-                    
                     {
                       "name" => "format",
-                      "description" => "return format (rdf/xml, ntriples, nquads, turtle, json-ld)",
+                      "description" => "return format (rdf-xml, ntriples, turtle, json-ld)",
                       "dataType" => "string",
                       "paramType" => "query",
-                      
                       "allowableValues" => "",
-                      
                     },
-                    
-                    
-                    
-                    
                   ]}) do
   cross_origin
   # the guts live here

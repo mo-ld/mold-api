@@ -9,20 +9,13 @@ MyApp.add_route('GET', '/v1/search', {
                   "endpoint" => "/search", 
                   "notes" => "The Search endpoint returns a graph of URI resources, its namespace and the\nlables that had a potential hit from the kword search.\n",
                   "parameters" => [
-                    
                     {
                       "name" => "q",
                       "description" => "Keyword search",
                       "dataType" => "string",
                       "paramType" => "query",
-                      
                       "allowableValues" => "",
-                      
                     },
-                    
-                    
-                    
-                    
                   ]}) do
   cross_origin
   # the guts live here
