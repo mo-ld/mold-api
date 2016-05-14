@@ -17,7 +17,7 @@ MyApp.add_route('GET', '/v1/search', {
                       "allowableValues" => "",
                     },
                   ]}) do
-  cross_origin
+  # cross_origin
   # the guts live here
   content_type :json
   format = settings.format['json']

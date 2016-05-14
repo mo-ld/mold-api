@@ -24,7 +24,7 @@ MyApp.add_route('GET', '/v1/inlinks', {
                       "allowableValues" => "",
                     },
                   ]}) do
-  cross_origin
+  # cross_origin
   # the guts live here
 
   format = settings.format['json-ld']

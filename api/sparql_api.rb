@@ -1,5 +1,5 @@
 require 'json'
-
+require 'uri'
 
 MyApp.add_route('GET', '/v1/sparql', {
                   "resourcePath" => "/Sparql",
@@ -24,7 +24,7 @@ MyApp.add_route('GET', '/v1/sparql', {
                       "allowableValues" => "",
                     }
                   ]}) do
-  cross_origin
+  # cross_origin
   # the guts live here
 
   format = settings.format['json-ld']
@@ -62,27 +62,25 @@ MyApp.add_route('POST', '/v1/sparql', {
                      "schema": {"type": "string"}
                     }
                   ]}) do
-  cross_origin
+
+  # cross_origin
   # the guts live here
 
   format = settings.format['json']
-  body = JSON.parse(request.body.read.to_s)
-  body_format = body['format']
-  if body_format
-    content_type body_format.gsub("-","_").to_sym
-    if settings.format.has_key? body_format
-      format = settings.format[body_format]
-    end
-  end
 
-  q = body['query']
+  q = request.body.read
   q.gsub!("&","%26%0A")
   q.gsub!("#","%23")
   q.gsub!("\"","")
-  url = settings.sparql+"?query=#{q}&format=#{format}"
-  req = settings.http.request_get(URI(url))
+
+  url = settings.sparql
+  body = "query="+URI.escape(q)+"&requestMethod=POST&format=json"
+  req = settings.http.request_post(URI(url),body)
+  puts req.read_body
   res = req.read_body
 
-  res
+  # return
+  status 200
+  [200, {}, JSON.parse(res)]
 
 end
