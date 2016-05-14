@@ -76,11 +76,9 @@ MyApp.add_route('POST', '/v1/sparql', {
   url = settings.sparql
   body = "query="+URI.escape(q)+"&requestMethod=POST&format=json"
   req = settings.http.request_post(URI(url),body)
-  puts req.read_body
   res = req.read_body
 
   # return
-  status 200
   [200, {}, JSON.parse(res)]
 
 end
